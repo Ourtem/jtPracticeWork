@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="tw-zn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Freckle+Face" rel="stylesheet">
+    <title>時鐘</title>
+
+    <style>
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    #box{
+        width: 100vw;
+        height:100vh;
+        display:flex;
+        flex-direction: column;
+        align-items:center;
+        justify-content:center;
+        background-image:url(./un.jpg);
+        background-size: cover;
+    }
+    #scale{
+        width: 800px;
+        height: 800px;
+        position: absolute;
+        top:-25px;
+        left:-25px;
+        border-radius: 50%;
+        background: url(./scale.png);
+        background-size: cover;
+        filter: opacity(0.5);
+    }
+    #clock{
+        width: 750px;
+        height: 750px;
+        border-radius: 50%;
+        background-color: beige;
+        position: relative;
+        background-image: url(./sky.jpg);
+        background-size: cover;
+        animation: bs 8s linear infinite alternate;
+    }
+
+    #hour{
+        height:30%;
+        width:30%;
+        background-image: url(./ego.png);
+        background-size: 120px;
+        background-repeat: no-repeat;
+        background-position:0px 50%;
+        position:absolute;
+        top:35%;
+        left:20%;
+        transform-origin: right center;
+        
+    }
+    
+    #minute{
+        height:30%;
+        width:40%;
+        background-image: url(./boat.png);
+        background-size: 150px;
+        background-repeat: no-repeat;
+        background-position:0px 50%;
+        position:absolute;
+        top:35%;
+        left:10%;
+        transform-origin: right center;
+        
+    }
+    
+    #second{
+        height:40%;
+        width:60%;
+        background-image: url(./airplane.png);
+        background-size: 150px;
+        background-repeat: no-repeat;
+        background-position:0px 50%;
+        position:absolute;
+        top:30%;
+        left:-10%;  
+        transform-origin: right center;
+        
+    }
+    
+    #pic1{
+        width:80%;
+        height:80%;
+        border-radius: 50%;
+        position:absolute;
+        background-image: url(./ocean.jpg);
+        background-size: cover;
+        top: 10%;
+        left: 10%;
+    }
+    #pic2{
+        width:50%;
+        height:50%;
+        border-radius: 50%;
+        background-size: cover;
+        background-image: url(./jungleh2.jpg);
+        position:absolute;
+        top: 25%;
+        left: 25%;
+    }
+    #time{
+        margin: 30px;
+        font-size: 50px;
+        font-family: "Freckle Face","微軟正黑體";
+        color:white;
+    }
+
+    /* #second:hover{
+        transition:  2s;
+        filter:opacity(0);
+    } */
+
+    /* #Dio{
+        width: 30%;
+        height: 60%;
+        top:10%;
+        border-radius: 50%;
+        position: absolute;
+        background-image: url(./Dio2.png);
+        background-size: cover;
+    } */
+    @keyframes bs{
+			0%{
+                box-shadow: 0px 0px 100px 20px rgb(57, 180, 32);
+			}
+            25%{
+				box-shadow: 0px 0px 100px 20px rgb(37, 102, 201);
+            }
+            50%{
+                box-shadow: 0px 0px 100px 20px rgb(193, 35, 193);
+            }
+            75%{
+                box-shadow: 0px 0px 100px 20px rgb(182, 32, 32);
+            }
+			100%{
+				box-shadow: 0px 0px 100px 20px rgb(192, 190, 42);
+			}
+		}
+    </style>
+
+</head>
+<body>
+    <div id="box">
+        <div id="Dio"></div>
+        <div id="clock">
+            <div id="scale"></div>
+            <div id="pic1"></div>
+            <div id="pic2"></div>
+            <div id="hour"></div>
+            <div id="minute"></div>
+            <div id="second"></div>
+        </div>
+        <div id="time"></div>
+    </div>
+
+<script>
+    let clk=document.getElementById("clock");
+    let sca=document.getElementById("scale");
+    const hour = document.getElementById("hour");
+
+    setInterval(updateTime,1000);
+
+    function updateTime(){
+        let date = new Date();
+        let h =date.getHours();
+        let m =date.getMinutes();
+        let s =date.getSeconds();
+        hour.style.transform=`rotate(${h*30+90}deg)`;
+        minute.style.transform=`rotate(${m*6+90}deg)`;
+        second.style.transform=`rotate(${s*6+90}deg)`;
+        let time=document.getElementById("time");
+        (s <10)?time.innerHTML=`${h}時${m}分0${s}秒`:time.innerHTML=`${h}時${m}分${s}秒`;
+    }
+    updateTime();
+
+    clk.onmouseover = function(){
+		sca.style.filter='opacity(1)';
+	}
+    clk.onmouseout = function(){
+		sca.style.filter='opacity(0)';
+	}
+    
+</script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143316315-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143316315-2');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            font-family: "微軟正黑體", Arial, Helvetica, sans-serif;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body {
+            background: rgb(103, 108, 119);
+        }
+
+        ::selection {
+            background: none;
+        }
+
+        .card {
+            width: 100px;
+            height: 180px;
+            position: relative;
+            /* 設置子元素在3D空間中 */
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .front {
+            width: 100%;
+            height: 100%;
+            background: url("./images/Red_back.jpg");
+            background-position: center;
+            background-size: cover;
+        }
+
+        .back {
+            width: 100%;
+            height: 100%;
+            background-position: center;
+            background-size: 100% 100%;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            transform: rotateY(180deg);
+        }
+
+        .open {
+            transform: rotateY(180deg);
+            pointer-events: none;
+        }
+
+        .clear {
+            pointer-events: none;
+        }
+
+        #main {
+            width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #scorekanban {
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            position: absolute;
+            top: 0px;
+            display: none;
+            color: white;
+            text-align: center;
+        }
+
+        #tableNo1 {
+            border: 1px solid white;
+            width: 700px;
+            height: 600px;
+            margin: 0 auto;
+            margin-top: 150px;
+            font-size: 30px;
+            overflow: hidden;
+        }
+
+        #tableNo1 td {
+            width: 25%;
+            height: 100px;
+        }
+
+        #kanban {
+            width: 500px;
+            height: 50px;
+            margin: 0 auto;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 30px;
+        }
+
+        #kanban td {
+            width: 40%;
+        }
+
+        #kanban:nth-child(3) {
+            width: 20%;
+        }
+
+        #score {
+            font-size: 40px;
+        }
+
+        #timer {
+            font-size: 40px;
+        }
+
+        #start {
+            background-color: red;
+            color: white;
+        }
+
+        @keyframes bk {
+            0% {}
+
+            50% {
+                background: black;
+                color: white;
+            }
+
+            100% {
+                background: black;
+                color: white;
+            }
+        }
+
+        @keyframes kb {
+            0% {
+                background: black;
+                color: white;
+            }
+
+            50% {
+                background: rgb(103, 108, 119);
+                color: black;
+            }
+
+            100% {
+                background: rgb(103, 108, 119);
+                color: white;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <table id="kanban">
+        <tr>
+            <td>計時:<span id="timer">000</span></td>
+            <td>分數:<span id="score">000</span></td>
+            <td><button id="start">遊戲開始</button></td>
+        </tr>
+    </table>
+    <div id="main"></div>
+    <div id="scorekanban">
+        <table id="tableNo1"></table><button id="confirm">確認</button>
+    </div>
+
+
+</body>
+<script src="./jquery-3.4.1.min.js"></script>
+<script>
+    $(function () {
+        let moving = false;
+        let time = 0;
+        let score = 0;
+        let timmer = 0;
+        let scorer = $("#score");
+        let name = prompt("請輸入姓名:");
+        if (name == "" || name=='null') {
+            location.reload();
+        }
+
+
+
+        for (let i = 0; i < 16; i++) {
+            $("#main").append( /*html*/ `
+            <div class="card">
+                <div class="front"></div>
+                <div class="back"></div>
+            </div>
+            `);
+        }
+
+
+        $("#start").on("click", function () {
+            $(".clear").removeClass("clear");
+            $(".card").addClass("open");
+            $("#timer").text("000");
+            scorer.text("000");
+            $("#start").css("pointer-events", "none");
+            $("#start").css("background-color", "rgb(120, 120, 120)");
+            $('#scorekanban').css("display", "none");
+            randomCard();
+            setTimeout(function () {
+                close();
+                $(".card").css("pointer-events", "auto");
+                $("body").css("animation", "kb 3s forwards ease");
+                timmer = setInterval(timer, 1000);
+                game();
+            }, 3000);
+        })
+
+        $("#confirm").on("click", function () {
+            $('#scorekanban').css("display", "none");
+        })
+
+
+        function timer() {
+            time++;
+            (time < 10) ? $("#timer").text(`00${time}`): (time < 100) ? $("#timer").text(`0${time}`) : $(
+                "#timer").text(time);
+            if (time > 59) {
+                $.ajax({
+                    method: "POST",
+                    url: "./base.php",
+                    data: {
+                        name,
+                        score,
+                    },
+                    dataType: "html",
+                    success: function (r) {
+                        $("#tableNo1").html(r);
+                    }
+                });
+                $('#scorekanban').css("display", "block");
+                clearInterval(timmer);
+                close();
+                $(".clear").removeClass("clear");
+                $(".card").css("opacity", "1.0");
+                $(".card").css("pointer-events", "none");
+                time = 0;
+                score = 0;
+                $("#start").css("pointer-events", "auto");
+                $("#start").css("background-color", "red");
+            } else if (time > 54) {
+                $("body").css("animation", "bk 5s forwards ease");
+            }
+        }
+
+
+        function game() {
+
+            if (moving == false) {
+
+                $(".card").on("click", function () {
+
+                    if ($(".open").length < 2 && !$(this).hasClass("open")) {
+                        $(this).addClass("open");
+                    }
+                    if ($(".open").length == 2 && moving == false) {
+                        moving = true;
+                        setTimeout(close, 1000);
+                        setTimeout(function () {
+                            moving = false
+                        }, 1600);
+
+
+                        if ($(".open").eq(0).attr("data-card") == $(".open").eq(1).attr("data-card")) {
+                            moving = true;
+                            score++;
+                            (score < 10) ? scorer.text(`00${score}`): (score < 100) ? scorer.text(
+                                `0${score}`) : scorer.text(score);
+                            $(".open").fadeTo(1000, 0).addClass("clear");
+                            setTimeout(function () {
+                                moving = false
+                            }, 1600);
+                        }
+                    }
+
+                    if ($(".clear").length == $(".card").length) {
+                        setTimeout(function () {
+                            randomCard();
+                            $(".clear").removeClass("clear");
+                            $(".card").css("opacity", "1.0");
+                            $(".card").addClass("open");
+                            $(".card").css("pointer-events", "none");
+                            setTimeout(function () {
+                                close();
+                                $(".card").css("pointer-events", "auto");
+                            }, 3000);
+                        }, 1500);
+                    }
+                })
+            }
+
+        }
+
+
+
+        function randomCard() {
+            for (let i = 0; i < $(".card").length; i++) {
+                let add = i % ($(".card").length / 2) + 1;
+                $(".card").eq(i).find(".back").css("background-image", `url("./images/${add}S.jpg")`);
+                $(".card").eq(i).attr("data-card", add);
+                let target = Math.floor(Math.random() * $(".card").length);
+                $(".card").eq(target).insertAfter($(".card").eq(i));
+            }
+        }
+
+
+        function close() {
+            $(".open").removeClass("open");
+        }
+
+
+
+
+    })
+</script>
+
+</html>

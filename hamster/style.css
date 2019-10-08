@@ -1,0 +1,151 @@
+*{
+    cursor: url(./images/saim.png) 11 10,auto;
+    margin: 0px;
+    font-family:'VT323',"微軟正黑體";
+}
+#box1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    widows: 100vw;
+    height: 100vh;
+    background-image: url(./images/back2.jpg);
+    background-size: cover;
+}
+#box2{
+    line-height: 250px;
+    color:white;
+}
+#topp{
+    background: rgba(0,0,0,0.9);
+    width: 100vw;
+    height: 100vh; 
+    position:absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+#topic{
+    text-align: center;
+    position: relative;
+}
+
+#cook{
+    background: url(./images/bigcat.gif);
+    background-size: cover;
+    width: 750px;
+    height: 451px;
+    text-align: center;
+    position: absolute;
+    left:0%;
+    top:22%;
+    background-repeat: no-repeat;
+    opacity: 0;
+}
+.cook{
+    animation:cok 0.5s forwards;
+}
+
+#cook2{
+    background: url(./images/smallcat.gif);
+    background-size: cover;
+    width: 750px;
+    height: 451px;
+    text-align: center;
+    position: absolute;
+    right:0%;
+    top:22%;
+    background-repeat: no-repeat;
+    opacity: 0;
+}
+.cook2{
+    animation:cok2 0.5s forwards;
+}
+
+#timeleft{
+    font-size: 70px;
+}
+.kanban{
+    font-size:50px;
+}
+#score{
+    font-size:70px;
+}
+
+button:hover{
+    color: white;
+    background-color: rgb(255, 0, 0);
+}
+
+table{
+    width: 30%;
+    height: 60%;
+    position: absolute;
+    top:21%
+}
+
+td{
+    border: 0px;
+    width: 10%;
+    height:15%;
+    border-radius: 50%;
+    border-spacing: 0;
+}
+.red{
+    background-image:url(./images/sfi.jpg);
+}
+.green{
+    background-image:url(./images/fi.jpg);
+}
+.yellow{
+    background-image:url(./images/glod.jpg);
+    background-size: cover;
+}
+.white{
+    background-image:url(./images/cooker.jpg);
+}
+
+.blue{
+    background-image:url(./images/ksfi.jpg);
+    background-size: cover;
+}
+
+.ky{
+    background-image:url(./images/kgod.jpg);
+    background-size: cover;
+}
+
+.kg{
+    background-image:url(./images/kfi.jpg);
+    background-size: cover;
+}
+
+.kw{
+    background-image:url(./images/kcooker.jpg);
+    background-size: cover;
+}
+@keyframes cok{
+    1%{
+    width: 750;
+    height: 451;
+    }
+    100%{
+        width: 750;
+    height: 451;
+    left: 32%;
+    opacity: 1;
+    }
+}
+@keyframes cok2{
+    1%{
+        width: 750;
+    height: 451;
+    }
+    100%{
+        width: 750;
+    height: 451;
+    right: 32%;
+    opacity: 1;
+    }
+}
