@@ -1,0 +1,229 @@
+body {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji", "Microsoft JHengHei";
+
+}
+.carousel-item {
+    height: 500px;
+}
+
+.carousel-caption {
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+}
+
+.obj-fit {
+    object-fit: cover;
+    object-position: center;
+}
+
+.hr-white{
+    width: 100%;
+    background: white;
+}
+
+.indeximg {
+    height: 300px;
+}
+
+#loading {
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1029;
+    position:fixed;
+    left: 0;
+    right: 0;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7));
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+#content, #footer{
+    display: none;
+}
+
+.dataTables_wrapper label{
+    color: #fff;
+}
+
+#page {
+    /* 100vh - nav - footer height - #page margin bottom - nav和page的間距 */
+    min-height: calc(100vh - 56px - 64px - 64px - (70px - 56px));
+}
+
+.card-img-top {
+    height: 200px;
+}
+
+.card-body {
+    height: 150px;
+    overflow-y: auto;
+}
+
+#twmap{
+    display: none;
+}
+
+#tool{
+    position: absolute;
+    display: none;
+    top:100px;
+    left: 500px;
+    border-radius: 5px;
+    width: 60px;
+    height:60px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 2px 5px 0px rgb(105, 105, 105);
+    color: rgb(226, 19, 0);
+    text-align: center;
+    line-height: 20px;
+    font-weight: bold;
+}
+
+
+table.dataTable.hover tbody tr:hover,
+table.dataTable.display tbody tr:hover {
+    background-color: #c2c2c2;
+    color:rgb(255, 0, 0);
+}
+table.dataTable tr:nth-child(odd)
+ {
+    background-color: #e6e6e6
+}
+
+.table th {
+    border-top: 0px ;
+}
+
+.page-item.active .page-link {
+    background-color: rgb(110, 0, 0) !important;
+    border:1px white solid;
+    color:#eee !important;
+}
+.page-link {
+    color: #530000 !important;
+    box-shadow: none !important;
+    outline: none !important; 
+}
+
+
+.disabled .page-link{
+    color:rgb(163, 163, 163) !important;
+}
+
+#particles-js {
+    background-color: #000000;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: -2;
+    top:0px;
+}
+
+.smoke{
+    width:100vw;
+    height:100vh;
+    background-image: url(../img/smoke.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow:hidden;
+    position:fixed;
+    z-index:-1;
+    top:0px;
+}
+
+.tablebox{
+    background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5));
+    border-radius: 5px;
+    padding: 10px;
+    height:500px ;
+    position: relative;
+}
+.tablebox2{
+    background-image: linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0.3));
+    border-radius: 5px;
+    padding: 10px;
+
+}
+
+.btnBg{
+    margin: 0 5px;
+    background-image: linear-gradient(rgba(255,255,255,0.4),rgba(255,255,255,0.4));
+    width: 100px;
+}
+.btnBg:hover{
+    background-image: linear-gradient(rgba(255,255,255,0.6),rgba(255,255,255,0.6));
+}
+
+.linkIcon{
+    filter:opacity(0.5);
+    display: inline-block;
+}
+.linkIcon:hover{
+    filter:opacity(1);
+}
+.linkText{
+    display: none;
+    color: rgba(192, 192, 192,0.8);
+}
+
+.navbar{
+    transition: 0.5s;
+}
+.navbar-brand{
+    font-weight: bold;
+    margin-right: 1.5rem;
+}
+.nav-item{
+    margin-right: 0.3rem;
+    font-size:14px;
+}
+.navbar-toggler{
+    display: none;
+    pointer-events: none;
+}
+#twm path{
+    cursor: pointer;
+}
+
+@media (max-width:768px){
+    .indeximg{
+        order: 1;
+    }
+    .indextext{
+        order: 2;
+    }
+
+    .table-rwd .tr-hide{
+        display: none;
+    }
+
+    .table-rwd td:not(.dataTables_empty):before {
+        content: attr(data-th);
+        color: red;
+        font-weight: bold;
+    }
+
+    .table-rwd td{
+        display: block;
+        border: 0;
+        line-height: 0.5;
+    }
+
+    .table-rwd tr{
+        border: 1px solid black;
+        display: block;
+    }
+    .btnBg{
+        height: 30px;
+        line-height: 15px;
+        margin: 0px;
+        width: 80px;
+        padding: 0px;
+    }
+}

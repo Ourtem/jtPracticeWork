@@ -1,0 +1,19 @@
+{
+    "name":"登革熱警報",
+    "short_name":"登革熱警報",
+    "start_url":"../index.html",
+    "display":"standalone",
+    "background_color":"#eeeeee",
+    "icons":[
+        {
+            "src":"../img/logo.png",
+            "sizes":"512x512",
+            "type":"image/png"
+        },
+        {
+            "src":"../img/logo192.png",
+            "sizes":"192x192",
+            "type":"image/png"
+        }
+    ]
+}

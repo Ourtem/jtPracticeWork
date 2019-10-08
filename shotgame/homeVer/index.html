@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            height: 100vh;
+            width: 100vw;
+            margin: 0px;
+            overflow: hidden;
+            background: black;
+
+        }
+
+        .zb {
+            width: 150px;
+            opacity: 0;
+            position: absolute;
+        }
+
+        /* 設定反白透明 */
+        .zb::selection {
+            color: rgba(0, 0, 0, 0);
+        }
+
+        .game {
+            width: 50%;
+            height: 70%;
+            overflow: hidden;
+            cursor: url();
+            position: relative;
+            background: wheat;
+            margin: 0px auto;
+            margin-top: 100px;
+            overflow: hidden;
+        }
+
+        .guy {
+            width: 100px;
+            height: 100px;
+            background: url(./rankappa.png);
+            background-size: cover;
+            position: absolute;
+            top: 25%;
+            left: 45%;
+            margin: 0px auto;
+            margin-top: 100px;
+            pointer-events: none;
+            z-index: 999;
+            transform: rotate(0deg);
+        }
+
+        .ray {
+            width: 100%;
+            height: 30px;
+            background: yellow;
+            position: absolute;
+            top: 25%;
+            left: 45%;
+            margin: 0px auto;
+            margin-top: 135px;
+            margin-left: 50px;
+            border-radius: 50%;
+            pointer-events: none;
+            transform-origin: left center;
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="game">
+        <div class="guy"></div>
+        <div class="ray"></div>
+    </div>
+
+
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script>
+        $(function () {
+            let timer = setInterval(setzb, 1000);
+
+            let zbid = 0;
+
+            let di = ["top", "left", "right", "bottom"];
+
+            transhead();
+
+
+            // 控制殭屍
+            function setzb() {
+                let num = randd(2);
+                for (let i = 0; i < num; i++) {
+                    appr(zbid);
+                    $(`#zb${zbid}`).css(di[randd(4)], "90%");
+                    $(`#zb${zbid}`).css(di[randd(4)], "90%");
+                    movezb(zbid);
+                    zbid++;
+                }
+            }
+            // 殭屍產生
+            function appr(zbid) {
+                $(".game").append(`<img src="./2.gif" draggable="false" class="zb" id="zb${zbid}">`);
+                $(`#zb${zbid}`).animate({
+                    opacity: 1,
+                }, 500, function () {})
+
+            }
+            // 控制僵屍的移動
+            function movezb(id) {
+                $(`#zb${id}`).animate({
+                    left: randd(80) + "%",
+                    top: randd(80) + "%"
+                }, 2000, function () {
+                    movezb(id)
+                });
+                setTimeout(function () {
+                    $(`#zb${id}`).remove();
+                }, 10000);
+            }
+
+
+            // 產生0~最大值的隨機數字
+            function randd(num) {
+                return Math.floor(Math.random() * num);
+            }
+
+
+
+            // 點擊殭屍，換圖，設定不可按
+            $("body").on("click", ".zb", function () {
+
+                $(this).fadeOut(0, function () {
+                    $(this).css("width", "200px");
+                    $(this).css("transform", `rotate(${randd(360)}deg)`);
+                    $(this).attr("src", "./blood.gif").fadeIn("100", function () {
+                        $(this).animate({
+                            opacity: 0,
+                        }, 500, function () {});
+                    });
+                    $(this).css("filter", "invert(0)");
+                });
+                $(".ray").animate({
+                    opacity: 1,
+                }, 100, function () {
+                    $(".ray").css("opacity", 0);
+                });
+                $(this).css("pointer-events", "none");
+                $(this).stop();
+            })
+            // 控制角色
+            function transhead() {
+
+                $(document).mousemove(function (e) {
+
+                    let ox = Math.floor((($(".guy").offset().left) + 50) * 100) / 100;
+                    let oy = Math.floor((($(".guy").offset().top) + 50) * 100) / 100;
+
+                    let mx = e.pageX;
+                    let my = e.pageY;
+
+                    let ex = (mx - ox);
+                    let ey = (oy - my);
+
+                    let predeg;
+                    let xx;
+                    let deg = 0;
+
+
+                    if (ex > 0 && ey > 0) {
+                        xx = 1;
+                    } else if (ex > 0 && ey < 0) {
+                        xx = 2;
+                    } else if (ex < 0 && ey < 0) {
+                        xx = 3;
+                    } else if (ex < 0 && ey > 0) {
+                        xx = 4;
+                    }
+
+                    predeg = Math.floor((Math.atan(ex / ey) * (180 / (Math.PI))) * 100) / 100;
+
+                    switch (xx) {
+                        case 1:
+                        case 4:
+                            deg = predeg - 90;
+                            break;
+                        case 2:
+                        case 3:
+                            deg = predeg + 90;
+                            break;
+
+                    }
+                    $(".guy,.ray").css("transform", `rotate(${deg}deg)`);
+                    console.log(`x=${mx}y=${my}xx=${xx}deg=${deg}`);
+
+
+                })
+            }
+
+
+        })
+    </script>
+</body>
+
+</html>
