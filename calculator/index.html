@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-Tw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Cabin&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            font-family: 'Cabin', sans-serif;
+        }
+        .box{
+            background:#FDC3B5;
+            width:100vw;
+            height:100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container{
+            height:600px;
+            width:  350px;
+            background:linear-gradient(30deg,rgb(255, 95, 51),#E43D68);
+        }
+        #show{
+            width: 100%;
+            height:30%;
+            display: block;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            font-size: 10px;
+            box-sizing: border-box;
+            padding-top: 5px;
+        }
+        #todo{
+            position: absolute;
+            text-align: right;
+            line-height: 60px;
+            height: 60px;
+            bottom: 0px;
+            right: 0px;
+            font-size:20.5px;
+            margin-bottom: 70px;
+            padding-right: 20px;
+        }
+        #input{
+            position: absolute;
+            text-align: right;
+            line-height: 60px;
+            height: 60px;
+            bottom: 0px;
+            right: 0px;
+            font-size:55.2px;
+            margin-bottom: 30px;
+            padding-right: 20px;
+        }
+        .buttom{
+            height:70%;
+        }
+        table{
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+        td{
+            width: 25%;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .cou,
+        .no{
+            cursor: pointer;
+        }
+        .t-whtie{
+            font-size: 26px;
+            color:white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+    <div class="container">
+        <div class="t-whtie" id="show">
+            CALCULATOR
+            <div id="todo"></div>
+            <div id="input">0</div>
+        </div>
+        <div class="buttom t-whtie" >
+                    <table>
+                            <tr>
+                                <td class="cou">C</td>
+                                <td class="cou">÷</td>
+                                <td class="cou">x</td>
+                                <td class="cou">-</td>
+                            </tr>
+                            <tr>
+                                <td class="no">7</td>
+                                <td class="no">8</td>
+                                <td class="no">9</td>
+                                <td rowspan="2" class="cou">+</td>
+                            </tr>
+                            <tr>
+                                <td class="no">4</td>
+                                <td class="no">5</td>
+                                <td class="no">6</td>
+                                
+                            </tr>
+                            <tr>
+                                <td class="no">1</td>
+                                <td class="no">2</td>
+                                <td class="no">3</td>
+                                <td rowspan="2" class="cou">=</td>
+                            </tr>
+                            <tr>
+                                <td class="no" colspan="2">0</td>  
+                                <td class="cou">.</td>
+                            </tr>
+                        </table>
+        </div>
+    </div>
+</div>
+<script>
+        const input = document.getElementById("input");
+        const todo = document.getElementById("todo");
+        const td = document.getElementsByTagName("td");
+        let val=[];
+        let sum="";
+        for(let i=0;i<td.length;i++){
+            td[i].onclick=function(){
+                console.log(this.innerText);
+                console.log(val);
+                if(this.innerText=="C"){
+                    input.innerText="0";
+                    todo.innerText="";
+                    val=[];
+                    sum="";
+                }       
+                else if(this.innerText=="x") {
+                    todo.insertAdjacentHTML("beforeend",this.innerText)
+                    val.push('*');
+                }
+                else if(this.innerText=="÷") {
+                    todo.insertAdjacentHTML("beforeend",this.innerText)
+                    val.push('/');
+                }
+                else if(this.innerText=="=")  {
+                    sum=val.join();
+                    sum = sum.replace(/,/g, "");
+                    input.innerText=eval(sum);
+                }else{
+                    if(todo.innerText=="0")  todo.innerText=this.innerText;
+                    else {
+                        todo.insertAdjacentHTML("beforeend",this.innerText);
+                        val.push(this.innerText);
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
